@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms'
 
 import { Usuario } from '../models'
-
+import { Auth } from '../../services/auth.service'
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
@@ -19,7 +19,9 @@ export class CadastroComponent implements OnInit {
     'senha': new FormControl(null)
   })
 
-  constructor() { }
+  constructor(
+    private auth: Auth
+  ) { }
 
   ngOnInit(): void {
   }
@@ -36,7 +38,8 @@ export class CadastroComponent implements OnInit {
       this.formulario.value.nome_usuario,
       this.formulario.value.senha
     )
-    console.log(usuario)
+    this.auth.cadastrarUsuario(usuario)
+      //.then(() => this.exibirPainelLogin())
   }
 
 }
